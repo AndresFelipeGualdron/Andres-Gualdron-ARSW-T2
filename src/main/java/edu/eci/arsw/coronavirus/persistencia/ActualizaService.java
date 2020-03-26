@@ -16,6 +16,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 public class ActualizaService {
@@ -56,22 +57,36 @@ public class ActualizaService {
                     city.setLastUpdate(lastUpdate);
                     city.setKeyId(keyId);
 
-                    boolean estaPais = false;
-                    lista.forEach(k -> {
+                    AtomicBoolean estaPais = new AtomicBoolean(false);
+                    this.paises.forEach(k -> {
                         if(k.getNombre().equals(pais)){
+                            estaPais.set(true);
                             k.setContagiados(k.getContagiados() + confirmados);
                             k.setMuertos(k.getMuertos() + muertos);
                             k.setRecuperados(k.getRecuperados() + recuperados);
                             k.setLastUpdate(lastUpdate);
-                            boolean estaProvince = false;
+                            AtomicBoolean estaProvince = new AtomicBoolean(false);
                             k.getProvinces().forEach(s -> {
+                                estaProvince.set(true);
                                 if(s.getNombre().equals(province.getNombre())){
-                                    s.addCity(city);
+                                    AtomicBoolean estaCity = new AtomicBoolean(false);
+                                    s.getCities().forEach(c -> {
+                                        if(c.getNombre().equals(city.getNombre())){
+                                            estaCity.set(true);
+                                            c.setContagiados(city.getContagiados());
+                                            c.setMuertos(city.getMuertos());
+                                            c.setRecuperados(city.getRecuperados());
+                                        }
+                                    });
+                                    if(!estaCity.get()){
+                                        s.addCity(city);
+                                    }
                                     s.setContagiados(s.getContagiados() + city.getContagiados());
                                     s.setMuertos(s.getMuertos() + city.getMuertos());
                                     s.setRecuperados(s.getRecuperados() + city.getRecuperados());
+
                                 }
-                                if(!estaProvince){
+                                if(!estaProvince.get()){
                                     province.addCity(city);
                                     province.setContagiados(city.getContagiados());
                                     province.setMuertos(city.getMuertos());
@@ -82,7 +97,7 @@ public class ActualizaService {
                             });
                         }
                     });
-                    if(!estaPais){
+                    if(!estaPais.get()){
                         Country co = new Country();
                         co.addProvince(province);
                         co.setContagiados(city.getContagiados());
@@ -90,15 +105,38 @@ public class ActualizaService {
                         co.setRecuperados(city.getRecuperados());
                         co.setKeyId(city.getKeyId());
                         co.setLastUpdate(city.getLastUpdate());
+                        lista.add(co);
                     }
                 }
                 else if(!provincia.equals("")){
-
                     province.setContagiados(confirmados);
                     province.setMuertos(muertos);
                     province.setRecuperados(recuperados);
                     province.setLastUpdate(lastUpdate);
                     province.setKeyId(keyId);
+                    AtomicBoolean estaPais = new AtomicBoolean(false);
+                    this.paises.forEach(k -> {
+                        if (k.getNombre().equals(pais)) {
+                            estaPais.set(true);
+                            k.setContagiados(k.getContagiados() + confirmados);
+                            k.setMuertos(k.getMuertos() + muertos);
+                            k.setRecuperados(k.getRecuperados() + recuperados);
+                            k.setLastUpdate(lastUpdate);
+                            AtomicBoolean estaProvince = new AtomicBoolean(false);
+                            k.getProvinces().forEach(s -> {
+                                if (s.getNombre().equals(province.getNombre())) {
+                                    estaProvince.set(true);
+                                    s.setContagiados(confirmados);
+                                    s.setMuertos(muertos);
+                                    s.setRecuperados(recuperados);
+                                }
+                            });
+                            if(!estaProvince.get()){
+
+                            }
+                        }
+                    });
+
                 }
                 else{
 
