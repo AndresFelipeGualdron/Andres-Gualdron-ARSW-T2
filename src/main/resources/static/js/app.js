@@ -19,9 +19,12 @@ function initMap()
 {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: -34.397, lng: 150.644},
-        zoom: 8
+        zoom: 3
     });
 
+    // fetch('https://raw.githubusercontent.com/jayshields/google-maps-api-template/master/markers.json')
+    //     .then(function(response){return response.json()})
+    //     .then(plotMarkers);
 }
 
 var markers;
@@ -29,12 +32,11 @@ var bounds;
 
 function plotMarkers(m)
 {
-    initMap();
+
     markers = [];
     bounds = new google.maps.LatLngBounds();
-
     m.forEach(function (marker) {
-        var position = new google.maps.LatLng(marker.latlng[0], marker.latlng[1]);
+        var position = new google.maps.LatLng(marker.lat, marker.lng);
 
         markers.push(
             new google.maps.Marker({
@@ -43,7 +45,6 @@ function plotMarkers(m)
                 animation: google.maps.Animation.DROP
             })
         );
-
         bounds.extend(position);
     });
 
@@ -57,16 +58,45 @@ var module = (function(){
 
     pais = {};
 
+    pedirPaisCorrecto = function(data){
+        console.log(data);
+        $("#contenidoPais").empty();
+        $("#contenidoPaisRegion").empty();
+        $("#contenidoPais").append("<tr > <td>Num Deaths</td> <td>"+data.muertos+"</td> </tr>" +
+            " <tr> <td>Num Infected</td> <td>"+data.contagiados+"</td> " + "</tr>" +
+            " <tr> <td>Num Cured</td> <td>"+data.recuperados+"</td></tr> </tr>");
+        data.provinces.forEach(province => {
+            $("#contenidoPaisRegion").append(" <tr> " +
+                "<td> </td> " +
+                "</tr> ");
+        });
+    }
+
+    pedirPaisIncorrecto = function(error){
+
+    }
+
     correctoUbicacion = function(data, nombreCorrecto){
+        markers = [];
         console.log(data);
         d = data.filter(country => {
             if(country.name == nombreCorrecto || country.alpha2Code == nombreCorrecto || country.alpha3Code == nombreCorrecto) return country;
         });
         pais = d[0];
-        ubicacion = {
+        ubicacion =[{
             lat : pais.latlng[0],
             lng : pais.latlng[1]
-        };
+        }];
+
+        plotMarkers(ubicacion);
+
+        map.setZoom(1);
+        agreagrPaisDetalle(nombreCorrecto);
+
+    }
+
+    agreagrPaisDetalle = function(pais){
+        apiclient.getPais(pais,pedirPaisCorrecto, pedirPaisIncorrecto);
     }
 
     incorrectoUbicacion = function(error){
@@ -99,6 +129,7 @@ var module = (function(){
         init: function(){
             var url = '/countries';
             apiclient.consultarPaises(obtenerPaisesCorrecto,obtenerPaisesIncorrecto, url);
+            initMap();
         },
         clickPais : clickPais,
         print: print

@@ -30,9 +30,23 @@ var apiclient = (function(){
         });
     }
 
+    function getPais(pais, correcto, incorrecto){
+        $.ajax({
+            type : "GET",
+            url : "/country/"+pais,
+            success : function (data) {
+                correcto(data);
+            },
+            error : function (error) {
+                incorrecto(error);
+            }
+        });
+    }
+
 
     return {
         consultarPaises : consultarPaises,
-        getUbicacion : getUbicacion
+        getUbicacion : getUbicacion,
+        getPais : getPais
     }
 })();

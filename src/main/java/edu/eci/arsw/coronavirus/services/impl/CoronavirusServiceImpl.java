@@ -18,4 +18,9 @@ public class CoronavirusServiceImpl implements CoronavirusService {
     public List<Country> obtenerPaises() {
         return persistencia.obtenerPaises();
     }
+
+    @Override
+    public Country obtenerPais(String nombre) {
+        return persistencia.obtenerPais(nombre);
+    }
 }

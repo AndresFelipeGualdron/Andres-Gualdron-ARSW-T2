@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class Persistencia {
@@ -19,7 +20,12 @@ public class Persistencia {
     }
 
     public Country obtenerPais(String pais){
-        return null;
+        List<Country> lista = actualizaService.getPaises();
+        AtomicReference<Country> country = new AtomicReference<>(new Country());
+        lista.forEach(item -> {
+            if(item.getNombre().equals(pais)) country.set(item);
+        });
+        return country.get();
     }
 
     

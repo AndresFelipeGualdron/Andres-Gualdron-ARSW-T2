@@ -9,4 +9,6 @@ public interface CoronavirusService {
 
     List<Country> obtenerPaises();
 
+    Country obtenerPais(String  nombre);
+
 }
