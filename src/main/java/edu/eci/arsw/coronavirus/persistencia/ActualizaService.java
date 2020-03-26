@@ -1,7 +1,9 @@
 package edu.eci.arsw.coronavirus.persistencia;
 
 
+import edu.eci.arsw.coronavirus.model.City;
 import edu.eci.arsw.coronavirus.model.Country;
+import edu.eci.arsw.coronavirus.model.Province;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
@@ -43,6 +45,28 @@ public class ActualizaService {
 
                 String lastUpdate = object.getString("lastUpdate");
                 String keyId = object.getString("keyId");
+
+                City city = new City();
+                Province province = new Province();
+
+                if(!ciudad.equals("")){
+                    city.setContagiados(city.getContagiados() + confirmados);
+                    city.setMuertos(city.getMuertos() + muertos);
+                    city.setRecuperados(city.getRecuperados() + recuperados);
+                    city.setLastUpdate(lastUpdate);
+                }
+                if(!provincia.equals("")){
+
+                }
+
+                lista.forEach(k -> {
+                    if(k.getNombre().equals(pais)){
+                        k.setContagiados(k.getContagiados() + confirmados);
+                        k.setMuertos(k.getMuertos() + muertos);
+                        k.setRecuperados(k.getRecuperados() + recuperados);
+                        k.setLastUpdate(lastUpdate);
+                    }
+                });
             }
 
             System.out.println(countriesJson);

@@ -8,6 +8,8 @@ public class Country {
     private int muertos;
     private  int contagiados;
     private int recuperados;
+    private String lastUpdate;
+    private String keyId;
     private List<Province> provinces;
 
     public Country(){
@@ -44,6 +46,22 @@ public class Country {
 
     public void setRecuperados(int recuperados) {
         this.recuperados = recuperados;
+    }
+
+    public String getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(String lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public String getKeyId() {
+        return keyId;
+    }
+
+    public void setKeyId(String keyId) {
+        this.keyId = keyId;
     }
 
     public List<Province> getProvinces() {

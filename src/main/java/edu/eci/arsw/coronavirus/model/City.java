@@ -6,6 +6,8 @@ public class City {
     private int muertos;
     private  int contagiados;
     private int recuperados;
+    private String lastUpdate;
+    private String keyId;
 
     public String getNombre() {
         return nombre;
@@ -37,5 +39,21 @@ public class City {
 
     public void setRecuperados(int recuperados) {
         this.recuperados = recuperados;
+    }
+
+    public String getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(String lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public String getKeyId() {
+        return keyId;
+    }
+
+    public void setKeyId(String keyId) {
+        this.keyId = keyId;
     }
 }
