@@ -50,23 +50,60 @@ public class ActualizaService {
                 Province province = new Province();
 
                 if(!ciudad.equals("")){
-                    city.setContagiados(city.getContagiados() + confirmados);
-                    city.setMuertos(city.getMuertos() + muertos);
-                    city.setRecuperados(city.getRecuperados() + recuperados);
+                    city.setContagiados(confirmados);
+                    city.setMuertos(muertos);
+                    city.setRecuperados(recuperados);
                     city.setLastUpdate(lastUpdate);
-                }
-                if(!provincia.equals("")){
+                    city.setKeyId(keyId);
 
-                }
-
-                lista.forEach(k -> {
-                    if(k.getNombre().equals(pais)){
-                        k.setContagiados(k.getContagiados() + confirmados);
-                        k.setMuertos(k.getMuertos() + muertos);
-                        k.setRecuperados(k.getRecuperados() + recuperados);
-                        k.setLastUpdate(lastUpdate);
+                    boolean estaPais = false;
+                    lista.forEach(k -> {
+                        if(k.getNombre().equals(pais)){
+                            k.setContagiados(k.getContagiados() + confirmados);
+                            k.setMuertos(k.getMuertos() + muertos);
+                            k.setRecuperados(k.getRecuperados() + recuperados);
+                            k.setLastUpdate(lastUpdate);
+                            boolean estaProvince = false;
+                            k.getProvinces().forEach(s -> {
+                                if(s.getNombre().equals(province.getNombre())){
+                                    s.addCity(city);
+                                    s.setContagiados(s.getContagiados() + city.getContagiados());
+                                    s.setMuertos(s.getMuertos() + city.getMuertos());
+                                    s.setRecuperados(s.getRecuperados() + city.getRecuperados());
+                                }
+                                if(!estaProvince){
+                                    province.addCity(city);
+                                    province.setContagiados(city.getContagiados());
+                                    province.setMuertos(city.getMuertos());
+                                    province.setRecuperados(city.getRecuperados());
+                                    province.setKeyId(city.getKeyId());
+                                    province.setLastUpdate(city.getLastUpdate());
+                                }
+                            });
+                        }
+                    });
+                    if(!estaPais){
+                        Country co = new Country();
+                        co.addProvince(province);
+                        co.setContagiados(city.getContagiados());
+                        co.setMuertos(city.getMuertos());
+                        co.setRecuperados(city.getRecuperados());
+                        co.setKeyId(city.getKeyId());
+                        co.setLastUpdate(city.getLastUpdate());
                     }
-                });
+                }
+                else if(!provincia.equals("")){
+
+                    province.setContagiados(confirmados);
+                    province.setMuertos(muertos);
+                    province.setRecuperados(recuperados);
+                    province.setLastUpdate(lastUpdate);
+                    province.setKeyId(keyId);
+                }
+                else{
+
+                }
+
             }
 
             System.out.println(countriesJson);

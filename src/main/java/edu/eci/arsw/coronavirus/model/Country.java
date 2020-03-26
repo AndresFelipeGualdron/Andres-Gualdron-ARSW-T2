@@ -16,6 +16,10 @@ public class Country {
 
     }
 
+    public void addProvince(Province province){
+        provinces.add(province);
+    }
+
     public String getNombre() {
         return nombre;
     }

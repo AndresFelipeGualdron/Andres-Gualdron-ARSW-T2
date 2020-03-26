@@ -13,6 +13,10 @@ public class Province {
 
     private List<City> cities;
 
+    public void addCity(City city){
+        cities.add(city);
+    }
+
     public List<City> getCities() {
         return cities;
     }
