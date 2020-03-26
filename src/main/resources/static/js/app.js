@@ -3,18 +3,15 @@ var module = (function(){
     paises = [];
 
 
-
+    clickPais = function(nombre){
+        console.log(nombre);
+    }
 
 
     obtenerPaisesCorrecto = function(data) {
-        console.log(data);
         paises = data;
         data.forEach(pais => {
-            console.log(pais);
-            $("#contenidoPaises").append("<td>"+pais.nombre+"</td>");
-            $("#contenidoPaises").append("<td>"+pais.muertos+"</td>");
-            $("#contenidoPaises").append("<td>"+pais.contagiados+"</td>");
-            $("#contenidoPaises").append("<td>"+pais.recuperados+"</td>");
+            $("#contenidoPaises").append("<tr onclick='module.clickPais(\""+pais.nombre+"\")' class='seleccionarPais'> <td>"+pais.nombre+"</td><td>"+pais.muertos+"</td><td>"+pais.contagiados+"</td><td>"+pais.recuperados+"</td></tr>");
         })
     }
 
@@ -26,6 +23,7 @@ var module = (function(){
         init: function(){
             var url = '/countries';
             apiclient.consultarPaises(obtenerPaisesCorrecto,obtenerPaisesIncorrecto, url);
-        }
+        },
+        clickPais : clickPais
     }
 })();

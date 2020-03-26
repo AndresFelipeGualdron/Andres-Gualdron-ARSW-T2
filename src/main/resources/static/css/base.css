@@ -3,6 +3,11 @@
     padding: 0px 100px;
 }
 
+.seleccionarPais:hover{
+    cursor: pointer;
+    background: gray;
+}
+
 tr, th, td{
     padding: 20px;
 }
