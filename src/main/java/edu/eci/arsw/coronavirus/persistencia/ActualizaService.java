@@ -110,6 +110,7 @@ public class ActualizaService {
                     if(!estaPais.get()){
                         Country co = new Country();
                         co.addProvince(province);
+                        co.setNombre(pais);
                         co.setContagiados(city.getContagiados());
                         co.setMuertos(city.getMuertos());
                         co.setRecuperados(city.getRecuperados());
