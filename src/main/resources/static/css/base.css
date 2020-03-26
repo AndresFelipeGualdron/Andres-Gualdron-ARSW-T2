@@ -11,3 +11,9 @@
 tr, th, td{
     padding: 20px;
 }
+
+#map {
+    height: 400px;
+    weight: 100%;
+    background-color: white;
+}

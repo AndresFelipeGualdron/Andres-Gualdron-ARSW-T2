@@ -55,9 +55,28 @@ var module = (function(){
 
     paises = [];
 
+    pais = {};
+
+    correctoUbicacion = function(data, nombreCorrecto){
+        console.log(data);
+        d = data.filter(country => {
+            if(country.name == nombreCorrecto || country.alpha2Code == nombreCorrecto || country.alpha3Code == nombreCorrecto) return country;
+        });
+        pais = d[0];
+        ubicacion = {
+            lat : pais.latlng[0],
+            lng : pais.latlng[1]
+        };
+    }
+
+    incorrectoUbicacion = function(error){
+        console.log(error);
+    }
+
 
     clickPais = function(nombre){
         console.log(nombre);
+        apiclient.getUbicacion(nombre, correctoUbicacion, incorrectoUbicacion);
     }
 
 
@@ -65,19 +84,23 @@ var module = (function(){
         paises = data;
         data.forEach(pais => {
             $("#contenidoPaises").append("<tr onclick='module.clickPais(\""+pais.nombre+"\")' class='seleccionarPais'> <td>"+pais.nombre+"</td><td>"+pais.muertos+"</td><td>"+pais.contagiados+"</td><td>"+pais.recuperados+"</td></tr>");
-        })
+        });
     }
 
     obtenerPaisesIncorrecto = function(error) {
         console.log(error);
     }
 
+    print = function(nombre){
+        plotMarkers(nombre)
+    }
+
     return {
         init: function(){
             var url = '/countries';
             apiclient.consultarPaises(obtenerPaisesCorrecto,obtenerPaisesIncorrecto, url);
-            comenzarMapa();
         },
-        clickPais : clickPais
+        clickPais : clickPais,
+        print: print
     }
 })();
