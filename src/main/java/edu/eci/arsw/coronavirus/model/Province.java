@@ -2,16 +2,21 @@ package edu.eci.arsw.coronavirus.model;
 
 import java.util.List;
 
-public class Country {
+public class Province {
 
     private String nombre;
     private int muertos;
     private  int contagiados;
     private int recuperados;
-    private List<Province> provinces;
 
-    public Country(){
+    private List<City> cities;
 
+    public List<City> getCities() {
+        return cities;
+    }
+
+    public void setCities(List<City> cities) {
+        this.cities = cities;
     }
 
     public String getNombre() {
@@ -44,13 +49,5 @@ public class Country {
 
     public void setRecuperados(int recuperados) {
         this.recuperados = recuperados;
-    }
-
-    public List<Province> getProvinces() {
-        return provinces;
-    }
-
-    public void setProvinces(List<Province> provinces) {
-        this.provinces = provinces;
     }
 }
