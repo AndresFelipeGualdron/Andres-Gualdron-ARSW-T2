@@ -62,12 +62,24 @@ var module = (function(){
         console.log(data);
         $("#contenidoPais").empty();
         $("#contenidoPaisRegion").empty();
-        $("#contenidoPais").append("<tr > <td>Num Deaths</td> <td>"+data.muertos+"</td> </tr>" +
+        $("#contenidoPais").append("<tr>\n" +
+            "                    <th>Name</th>\n" +
+            "                    <th>Birth Date</th>\n" +
+            "                </tr><tr > <td>Num Deaths</td> <td>"+data.muertos+"</td> </tr>" +
             " <tr> <td>Num Infected</td> <td>"+data.contagiados+"</td> " + "</tr>" +
             " <tr> <td>Num Cured</td> <td>"+data.recuperados+"</td></tr> </tr>");
+        $("#contenidoPaisRegion").append("<tr>\n" +
+            "                    <th>Regin</th>\n" +
+            "                    <th>Num deaths</th>\n" +
+            "                    <th>Num Infected</th>\n" +
+            "                    <th>Num Cured</th>\n" +
+            "                </tr> ");
         data.provinces.forEach(province => {
-            $("#contenidoPaisRegion").append(" <tr> " +
-                "<td> </td> " +
+            $("#contenidoPaisRegion").append("<tr> " +
+                "<td> "+ province.nombre +" </td> " +
+                "<td> "+ province.muertos +" </td> " +
+                "<td> "+ province.contagiados +" </td> " +
+                "<td> "+ province.recuperados +" </td> " +
                 "</tr> ");
         });
     }

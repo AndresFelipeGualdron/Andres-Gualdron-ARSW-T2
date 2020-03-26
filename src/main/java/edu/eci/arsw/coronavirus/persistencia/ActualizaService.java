@@ -54,6 +54,12 @@ public class ActualizaService {
 
                 City city = new City();
                 Province province = new Province();
+                province.setNombre(provincia);
+                province.setContagiados(confirmados);
+                province.setMuertos(muertos);
+                province.setRecuperados(recuperados);
+                province.setLastUpdate(lastUpdate);
+                province.setKeyId(keyId);
 
                 if(!ciudad.equals("")){
                     city.setNombre(ciudad);
@@ -79,6 +85,7 @@ public class ActualizaService {
                                     s.getCities().forEach(c -> {
                                         if(c.getNombre().equals(city.getNombre())){
                                             estaCity.set(true);
+                                            c.setNombre(province.getNombre());
                                             c.setContagiados(c.getContagiados() + city.getContagiados());
                                             c.setMuertos(c.getMuertos() + city.getMuertos());
                                             c.setRecuperados(c.getRecuperados() + city.getRecuperados());
@@ -89,22 +96,23 @@ public class ActualizaService {
                                     });
                                     if(!estaCity.get()){
                                         s.addCity(city);
+                                        s.setNombre(province.getNombre());
                                         s.setContagiados(s.getContagiados() + city.getContagiados());
                                         s.setMuertos(s.getMuertos() + city.getMuertos());
                                         s.setRecuperados(s.getRecuperados() + city.getRecuperados());
                                     }
 
                                 }
-                                if(!estaProvince.get()){
-                                    province.addCity(city);
-                                    province.setContagiados(city.getContagiados());
-                                    province.setMuertos(city.getMuertos());
-                                    province.setRecuperados(city.getRecuperados());
-                                    province.setKeyId(city.getKeyId());
-                                    province.setLastUpdate(city.getLastUpdate());
-                                    k.addProvince(province);
-                                }
                             });
+                            if(!estaProvince.get()){
+                                province.addCity(city);
+                                province.setContagiados(city.getContagiados());
+                                province.setMuertos(city.getMuertos());
+                                province.setRecuperados(city.getRecuperados());
+                                province.setKeyId(city.getKeyId());
+                                province.setLastUpdate(city.getLastUpdate());
+                                k.addProvince(province);
+                            }
                         }
                     });
                     if(!estaPais.get()){
