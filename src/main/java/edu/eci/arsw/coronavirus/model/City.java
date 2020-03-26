@@ -2,12 +2,12 @@ package edu.eci.arsw.coronavirus.model;
 
 public class City {
 
-    private String nombre;
-    private int muertos;
-    private  int contagiados;
-    private int recuperados;
-    private String lastUpdate;
-    private String keyId;
+    private String nombre = "";
+    private int muertos = 0;
+    private  int contagiados = 0;
+    private int recuperados = 0;
+    private String lastUpdate = "";
+    private String keyId = "";
 
     public String getNombre() {
         return nombre;

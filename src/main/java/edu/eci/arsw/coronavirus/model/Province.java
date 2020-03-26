@@ -1,17 +1,18 @@
 package edu.eci.arsw.coronavirus.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Province {
 
-    private String nombre;
-    private int muertos;
-    private  int contagiados;
-    private int recuperados;
-    private String lastUpdate;
-    private String keyId;
+    private String nombre = "";
+    private int muertos = 0;
+    private  int contagiados = 0;
+    private int recuperados = 0;
+    private String lastUpdate = "";
+    private String keyId = "";
 
-    private List<City> cities;
+    private List<City> cities = new ArrayList<>();
 
     public void addCity(City city){
         cities.add(city);

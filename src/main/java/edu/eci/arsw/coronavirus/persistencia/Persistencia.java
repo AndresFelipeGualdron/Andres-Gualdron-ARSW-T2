@@ -13,8 +13,13 @@ public class Persistencia {
     @Autowired
     ActualizaService actualizaService;
 
+
     public List<Country> obtenerPaises(){
         return actualizaService.getPaises();
+    }
+
+    public Country obtenerPais(String pais){
+        return null;
     }
 
     

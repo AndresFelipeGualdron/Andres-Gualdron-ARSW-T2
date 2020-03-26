@@ -24,6 +24,12 @@ public class ActualizaService {
     private List<Country> paises = new ArrayList<>();
 
     public ActualizaService(){
+        actualizar();
+    }
+
+
+    public void actualizar(){
+        this.paises = new ArrayList<>();
         try {
             URL url = new URL("https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/stats");
             URLConnection connection = url.openConnection();
@@ -97,9 +103,6 @@ public class ActualizaService {
                                     province.setKeyId(city.getKeyId());
                                     province.setLastUpdate(city.getLastUpdate());
                                     k.addProvince(province);
-                                    k.setContagiados(k.getContagiados() + province.getContagiados());
-                                    k.setMuertos(k.getMuertos() + province.getMuertos());
-                                    k.setRecuperados(k.getRecuperados() + province.getRecuperados());
                                 }
                             });
                         }
@@ -137,9 +140,6 @@ public class ActualizaService {
                                     s.setContagiados(confirmados);
                                     s.setMuertos(muertos);
                                     s.setRecuperados(recuperados);
-                                    k.setContagiados(k.getContagiados() + province.getContagiados());
-                                    k.setMuertos(k.getMuertos() + province.getMuertos());
-                                    k.setRecuperados(k.getRecuperados() + province.getRecuperados());
                                 }
                             });
                             if(!estaProvince.get()){
@@ -188,7 +188,7 @@ public class ActualizaService {
 
             }
 
-            System.out.println(countriesJson);
+//            System.out.println(this.paises);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -199,5 +199,6 @@ public class ActualizaService {
 
     public List<Country> getPaises(){
         return this.paises;
+//        return new ArrayList<>();
     }
 }

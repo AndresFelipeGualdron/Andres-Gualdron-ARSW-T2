@@ -1,16 +1,17 @@
 package edu.eci.arsw.coronavirus.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Country {
 
-    private String nombre;
-    private int muertos;
-    private  int contagiados;
-    private int recuperados;
-    private String lastUpdate;
-    private String keyId;
-    private List<Province> provinces;
+    private String nombre = "";
+    private int muertos = 0;
+    private  int contagiados = 0;
+    private int recuperados = 0;
+    private String lastUpdate = "";
+    private String keyId = "";
+    private List<Province> provinces = new ArrayList<>();
 
     public Country(){
 
